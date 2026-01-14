@@ -1,4 +1,3 @@
-import { act } from "react";
 import Project from "./project"
 
 class ProjectManager {
