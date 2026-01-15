@@ -74,6 +74,12 @@ class ProjectUI {
                     todo.toggleComplete();
                     this.renderTodos();
                 });
+                
+                const editBtn = document.createElement('button');
+                editBtn.textContent = "Edit";
+                editBtn.addEventListener('click', (todo, index) => {
+                    editTodoModal(todo, index);
+                })
 
                 const deleteBtn = document.createElement('button');
                 deleteBtn.textContent = "Delete";
