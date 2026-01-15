@@ -36,7 +36,7 @@ class ProjectUI {
     }
 
     renderTodos() {
-        const todosContainer = document.querySelector('todosContainer');
+        const todosContainer = document.querySelector('#todosContainer');
         todosContainer.textContent = "";
 
         const activeProject = this.projectManager.getActiveProject();
@@ -89,6 +89,9 @@ class ProjectUI {
                 });
 
                 buttonDiv.append(statusBtn, deleteBtn)
+                
+                todoItem.append(title,description,dueDate,priority,buttonDiv);
+                todosContainer.appendChild(todoItem);
             })
         }
     }
