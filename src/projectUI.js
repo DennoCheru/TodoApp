@@ -132,18 +132,15 @@ class ProjectUI {
         
         document.querySelector('#todo-modal').setAttribute('data-edit-index', index);
     }
-    
-    eventListeners() {
-        const addTodoBtn = document.querySelector('#addTodo');
-        addTodoBtn.addEventListener('click', this.openTodoModal());
 
-        const closeModalBtn = document.querySelector('#modal-close');
-        closeModalBtn.addEventListener('click', this.closeTodoModal());
+    openProjectModal() {
+        const modal = document.querySelector('#project-modal');
+        modal.computedStyleMap.display = 'block';
+    }
 
-        const saveTodoBtn = document.querySelector('#saveTodo');
-        saveTodoBtn.addEventListener('click', () => {
-            this.saveTodo()
-        });
+    closeProjectModal() {
+        const modal = document.querySelector('#project-modal');
+        modal.computedStyleMap.display = 'none';
     }
 
     saveTodo() {
@@ -170,7 +167,32 @@ class ProjectUI {
         this.closeTodoModal()
         this.clearTodoModal();
     }
+    
+    saveProject() {
+        this.projectManager.addProject(projectName);
+        this.renderProjects();
+        this.closeProjectModal();
+    }
+    
+    eventListeners() {
+        const addTodoBtn = document.querySelector('#addTodo');
+        addTodoBtn.addEventListener('click', this.openTodoModal());
 
+        const closeTodoModalBtn = document.querySelector('#closeTodoModal');
+        closeTodoModalBtn.addEventListener('click', this.closeTodoModal());
+
+        const saveTodoBtn = document.querySelector('#saveTodo');
+        saveTodoBtn.addEventListener('click',this.saveTodo());
+
+        const addProjectBtn = document.querySelector('#addProject');
+        addProjectBtn.addEventListener('click', this.openProjectModal());
+
+        const closeProjectModalBtn = document.querySelector('#closeProjectModal');
+        closeProjectModalBtn.addEventListener('click', this.closeProjectModal());
+
+        const saveProjectBtn = document.querySelector('#saveProject');
+        saveProjectBtn.addEventListener('click', this.saveProject());
+    }
     
 }
 
