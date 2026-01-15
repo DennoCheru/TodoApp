@@ -101,6 +101,77 @@ class ProjectUI {
             default: return '';
         }
     }
+
+    openTodoModal() {
+        const modal = document.querySelector('#todo-modal');
+        modal.computedStyleMap.display = 'block';
+    }
+
+    closeTodoModal() {
+        const modal = document.querySelector('#todo-modal');
+        modal.computedStyleMap.display = 'none';
+    }
+
+    editTodoModal() {
+        document.querySelector('#title').value = todo.title;
+        document.querySelector('#description').value = todo.description;
+        document.querySelector('#dueDate').value = todo.dueDate;
+        document.querySelector('#priority').value = todo.priority;
+        document.querySelector('#notes').value = todo.notes;
+        
+        document.querySelector('#todo-modal').setAttribute('data-edit-index', index);
+        openTodoModal();
+    }
+
+    clearTodoModal() {
+        document.querySelector('#title').value = "";
+        document.querySelector('#description').value = "";
+        document.querySelector('#dueDate').value = "";
+        document.querySelector('#priority').value = "";
+        document.querySelector('#notes').value = "";
+        
+        document.querySelector('#todo-modal').setAttribute('data-edit-index', index);
+    }
+    
+    eventListeners() {
+        const addTodoBtn = document.querySelector('#addTodo');
+        addTodoBtn.addEventListener('click', this.openTodoModal());
+
+        const closeModalBtn = document.querySelector('#modal-close');
+        closeModalBtn.addEventListener('click', this.closeTodoModal());
+
+        const saveTodoBtn = document.querySelector('#saveTodo');
+        saveTodoBtn.addEventListener('click', () => {
+            this.saveTodo()
+        });
+    }
+
+    saveTodo() {
+        const title = document.querySelector('#title').value;
+        const description = document.querySelector('#description').value;
+        const dueDate = document.querySelector('#dueDate').value;
+        const priority = document.querySelector('#priority').value;
+        const notes = document.querySelector('#notes').value;
+
+        const index = document.querySelector('#todo-modal').getAttribute('data-edit-index');
+
+        if(index === null) {
+            const newTodo = new Todo(title, description,dueDate,priority,notes);
+            this.projectManager.addTodoToProject(newTodo);
+        } else {
+            const todoToEdit = activeProject.todos[index];
+            todoToEdit.title = title;
+            todoToEdit.description = description;
+            todoToEdit.dueDate = dueDate;
+            todoToEdit.priority = priority;
+            todoToEdit.notes = notes;
+        }
+        this.renderTodos();
+        this.closeTodoModal()
+        this.clearTodoModal();
+    }
+
+    
 }
 
 export default ProjectUI;

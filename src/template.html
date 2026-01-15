@@ -9,10 +9,43 @@
     <section class="projects">
         <div id="projectsContainer"></div>
     </section>
+
     <section class="todos">
         <h2></h2>
         <div id="todosContainer"></div>
+        <button id="addTodo">Add Todo</button>
     </section>
     
+<!-- Add Todo's modal -->
+ <div id="todo-modal" class="modal">
+    <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <h2>Add Todo</h2>
+        <form action="" class="modal-form">
+            <label for="title">Title</label>
+            <input type="text" ,id="title" ,name="title" required>
+
+            <label for="description">Description</label>
+            <input type="text" ,id="description" ,name="description" required>
+
+            <label for="dueDate">dueDate</label>
+            <input type="date" ,id="dueDate" ,name="dueDate" required>
+
+            <label for="priority">Priority</label>
+            <select name="priority",id="priority">
+                <option value="low">Low</option>
+                <option value="medium">medium</option>
+                <option value="high">High</option>
+            </select>
+
+            <label for="notes">notes</label>
+            <textarea name="notes" id="notes"></textarea>
+
+            <button type="submit" id="saveTodo">Add Todo</button>
+        </form>
+    </div>
+ </div>
+
+
 </body>
 </html>
