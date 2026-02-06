@@ -14,7 +14,20 @@ class ProjectUI {
             projectName.textContent = project.name;
 
             projectsContainer.appendChild(projectName);
-        })   
+        });
+    }
+
+    renderTodos() {
+        const todosContainer = document.querySelector('#todos');
+        todosContainer.textContent = "";
+
+        const activeProject = this.projectManager.getActiveProject();
+        const todos = activeProject.todos;
+        todos.forEach((todo) => {
+            const todoCard = document.createElement('div');
+            todoCard.textContent = todo.name;
+
+        });
     }
 }
 
