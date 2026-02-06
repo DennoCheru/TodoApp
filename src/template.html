@@ -3,61 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Template</title>
+    <title>My Todo</title>
 </head>
 <body>
-    <section class="projects">
-        <div id="projectsContainer"></div>
-        <button id="addProject">Add Project</button>
-    </section>
-
-    <section class="todos">
-        <h2></h2>
-        <div id="todosContainer"></div>
-        <button id="addTodo">Add Todo</button>
-    </section>
-    
-<!-- Todo's modal -->
- <div id="todo-modal" class="modal">
-    <div class="modal-content">
-        <span class="modal-close" id="closeTodoModal">&times;</span>
-        <h2>Add Todo</h2>
-        <form action="" class="modal-form">
-            <label for="title">Title</label>
-            <input type="text" id="title" name="title" required>
-
-            <label for="description">Description</label>
-            <input type="text" id="description" name="description" required>
-
-            <label for="dueDate">Due Date</label>
-            <input type="date" id="dueDate" name="dueDate" required>
-
-            <label for="priority">Priority</label>
-            <select name="priority"id="priority">
-                <option value="low">Low</option>
-                <option value="medium">medium</option>
-                <option value="high">High</option>
-            </select>
-
-            <label for="notes">notes</label>
-            <textarea name="notes" id="notes"></textarea>
-
-            <button type="submit" id="saveTodo">Add Todo</button>
-        </form>
+    <div class="container" id="mainContainer">
+        <div id="projectsContainer" class="container">
+            <h1>Projects</h1>
+            <ul id="projects"></ul>
+        </div>
+        <div id="todosContainer" class="container"></div>
     </div>
- </div>
-
-<!-- Project Modal  -->
- <div id="project-modal" class="modal">
-    <div class="modal-content">
-        <span class="modal-close" id="closeProjectModal">&times;</span>
-        <h2>Add Project</h2>
-        <form action="" class="modal-form">
-            <label for="projectName">Project Name</label>
-            <input type="text" id="projectName" name="name" required="required">
-            <button type="submit" id="saveProject">Add Project</button>
-        </form>
-    </div>
- </div>
 </body>
 </html>
