@@ -26,5 +26,34 @@
         </form>
         <button id="saveProject">Save</button>
     </dialog>
+    <dialog id="addTodoModal" closedby="any">
+        <form action="" id="addTodoForm">
+            <h2>Add Todo</h2>
+
+            <label for="todoTitle">Title</label>
+            <input type="text" id="todoTitle" name="todoTitle" required>
+
+            <label for="todoDescription">Description</label>
+            <input type="text" id="todoDescription" name="todoDescription">
+
+            <label for="todoDueDate">Due Date</label>
+            <input type="date" id="todoDueDate" name="todoDueDate" required>
+
+            <label for="todoPriority">Priority</label>
+            <select name="todoPriority" id="todoPriority" required>
+                <option value="">Please select a priority</option>
+                <option value="high">High</option>
+                <option value="medium">medium</option>
+                <option value="low">Low</option>
+            </select>
+
+            <label for="todoCompleted">Completed</label>
+            <input type="checkbox" id="todoCompleted" name="todoCompleted">
+
+            <label for="todoNotes">Notes</label>
+            <textarea id="todoNotes" name="todoNotes"></textarea>
+        </form>
+        <button id="saveTodo">Save</button>
+    </dialog>
 </body>
 </html>

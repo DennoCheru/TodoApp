@@ -1,4 +1,5 @@
 import ProjectManager from "./projectManager";
+import Todo from "./todo";
 
 class ProjectUI {
     constructor() {
@@ -17,7 +18,7 @@ class ProjectUI {
             projectName.addEventListener('click', () => {
                 this.projectManager.setActiveProject(project.id);
                 this.renderTodos();
-            })
+            });
 
             projectsContainer.appendChild(projectName);
         });
@@ -38,26 +39,58 @@ class ProjectUI {
             const todoCard = document.createElement('div');
             todoCard.textContent = todo.name;
 
-            todosContainer.appendChild(todoCard)
+            todosContainer.appendChild(todoCard);
         });
     }
 
     addEventListeners() {
         const addProjectBtn = document.querySelector('#addProject');
         const addProjectModal = document.querySelector('#addProjectModal');
-        const addProjectForm = document.querySelector('#addProjectForm')
+        const addProjectForm = document.querySelector('#addProjectForm');
+        const saveProjectBtn = document.querySelector('#saveProject');
+
         addProjectBtn.addEventListener('click', () => {
             addProjectModal.showModal();
-
         });
 
-        const saveProjectBtn = document.querySelector('#saveProject');
         saveProjectBtn.addEventListener('click', () => {
             const projectName = document.querySelector('#projectName');
             this.projectManager.addProject(projectName.value);
             addProjectForm.reset();
             addProjectModal.close();
             this.renderProjects();
+        });
+
+        const addTodoBtn = document.querySelector('#addTodo');
+        const addTodoModal = document.querySelector('#addTodoModal');
+        const addTodoForm = document.querySelector('#addTodoForm');
+        const saveTodoBtn = document.querySelector('#saveTodo')
+
+        addTodoBtn.addEventListener('click', () => {
+            addTodoModal.show();
+        });
+
+        saveTodoBtn.addEventListener('click', () => {
+            const todoTitle = document.querySelector('#todoTitle');
+            const todoDescription = document.querySelector('#todoDescription');
+            const todoDueDate = document.querySelector('#todoDueDate');
+            const todoPriority = document.querySelector('#todoPriority');
+            const todoCompleted = document.querySelector('#todoCompleted');
+            const todoNotes = document.querySelector('#todoNotes');
+
+            const todo = new Todo(
+                todoTitle.value,
+                todoDescription.value,
+                todoDueDate.value,
+                todoPriority.value,
+                todoCompleted.value,
+                todoNotes.value
+            );
+
+            this.projectManager.addTodoToProject(todo);
+            addTodoForm.reset();
+            addTodoModal.close();
+            this.renderTodos();
         });
     }
     
