@@ -14,20 +14,31 @@ class ProjectUI {
             const projectName = document.createElement('li');
             projectName.textContent = project.name;
 
+            projectName.addEventListener('click', () => {
+                this.projectManager.setActiveProject(project.id);
+                this.renderTodos();
+            })
+
             projectsContainer.appendChild(projectName);
         });
     }
 
     renderTodos() {
+        const activeProject = this.projectManager.getActiveProject();
+
+        const title = document.querySelector('#header');
         const todosContainer = document.querySelector('#todos');
+
+        title.textContent = `${activeProject.name}'s Todos.`        
         todosContainer.textContent = "";
 
-        const activeProject = this.projectManager.getActiveProject();
+        
         const todos = activeProject.todos;
         todos.forEach((todo) => {
             const todoCard = document.createElement('div');
             todoCard.textContent = todo.name;
 
+            todosContainer.appendChild(todoCard)
         });
     }
 
