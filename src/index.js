@@ -9,4 +9,5 @@ const projectUI = new ProjectUI(projectManager);
 projectUI.addEventListeners();
 
 projectUI.renderProjects();
+projectUI.renderTodos();
 

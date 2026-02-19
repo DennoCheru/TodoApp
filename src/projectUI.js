@@ -37,7 +37,7 @@ class ProjectUI {
         const todos = activeProject.todos;
         todos.forEach((todo) => {
             const todoCard = document.createElement('div');
-            todoCard.textContent = todo.name;
+            todoCard.textContent = todo.title;
 
             todosContainer.appendChild(todoCard);
         });
@@ -67,10 +67,11 @@ class ProjectUI {
         const saveTodoBtn = document.querySelector('#saveTodo')
 
         addTodoBtn.addEventListener('click', () => {
-            addTodoModal.show();
+            addTodoModal.showModal();
         });
 
-        saveTodoBtn.addEventListener('click', () => {
+        saveTodoBtn.addEventListener('click', (e) => {
+            e.preventDefault();
             const todoTitle = document.querySelector('#todoTitle');
             const todoDescription = document.querySelector('#todoDescription');
             const todoDueDate = document.querySelector('#todoDueDate');
@@ -90,6 +91,8 @@ class ProjectUI {
             this.projectManager.addTodoToProject(todo);
             addTodoForm.reset();
             addTodoModal.close();
+            console.log(
+            this.projectManager.getActiveProject().todos);
             this.renderTodos();
         });
     }
