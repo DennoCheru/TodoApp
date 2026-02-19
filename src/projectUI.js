@@ -37,9 +37,43 @@ class ProjectUI {
         const todos = activeProject.todos;
         todos.forEach((todo) => {
             const todoCard = document.createElement('div');
-            todoCard.textContent = todo.title;
+            const todoTitle = document.createElement('h2');
+            todoTitle.textContent = todo.title;
+            const todoDueDate = document.createElement('p');
+            todoDueDate.textContent = todo.dueDate;
+            const buttonsDiv = document.createElement('div');
+            const toggleCompleteBtn = document.createElement('button');
+            toggleCompleteBtn.textContent = todo.completed ? "Mark Incomplete" : "Mark Complete";
+            const editBtn = document.createElement('button');
+            editBtn.textContent = "Edit";
+            const deleteBtn = document.createElement('button');
+            deleteBtn.textContent = "Delete";
+
+            buttonsDiv.append(toggleCompleteBtn, editBtn, deleteBtn)
+
+            todoCard.append(todoTitle, todoDueDate, buttonsDiv)
 
             todosContainer.appendChild(todoCard);
+
+            toggleCompleteBtn.addEventListener('click', () => {
+                todo.completed = !todo.completed;
+                this.renderTodos();
+            });
+
+            editBtn.addEventListener('click', () => {
+                const editTodoModal = document.querySelector('#addTodoModal');
+                document.querySelector('#todoTitle').value = todo.title;
+                document.querySelector('#todoDescription').value = todo.description;
+                document.querySelector('#todoDueDate').value = todo.dueDate;
+                document.querySelector('#todoPriority').value = todo.priority;
+                document.querySelector('#todoNotes').value = todo.notes;                
+                editTodoModal.showModal();
+            });
+
+            deleteBtn.addEventListener('click', () => {
+                activeProject.deleteTodo(todo.id);
+                this.renderTodos();
+            });
         });
     }
 
@@ -76,7 +110,6 @@ class ProjectUI {
             const todoDescription = document.querySelector('#todoDescription');
             const todoDueDate = document.querySelector('#todoDueDate');
             const todoPriority = document.querySelector('#todoPriority');
-            const todoCompleted = document.querySelector('#todoCompleted');
             const todoNotes = document.querySelector('#todoNotes');
 
             const todo = new Todo(
@@ -84,15 +117,13 @@ class ProjectUI {
                 todoDescription.value,
                 todoDueDate.value,
                 todoPriority.value,
-                todoCompleted.value,
                 todoNotes.value
             );
 
             this.projectManager.addTodoToProject(todo);
             addTodoForm.reset();
             addTodoModal.close();
-            console.log(
-            this.projectManager.getActiveProject().todos);
+            console.log(this.projectManager.getActiveProject().todos);
             this.renderTodos();
         });
     }

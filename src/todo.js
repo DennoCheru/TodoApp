@@ -8,10 +8,6 @@ class Todo {
         this.completed = false;
         this.notes = notes;
     }
-
-    toggleComplete(todo) {
-        this.completed = !todo.completed;
-    }
 }
 
 export default Todo;
