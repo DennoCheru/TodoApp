@@ -38,6 +38,7 @@ class ProjectUI {
         const todos = activeProject.todos;
         todos.forEach((todo) => {
             const todoCard = document.createElement('div');
+            todoCard.classList.add('card');
             const todoTitle = document.createElement('h2');
             todoTitle.textContent = todo.title;
             const todoDueDate = document.createElement('p');
