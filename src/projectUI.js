@@ -43,6 +43,7 @@ class ProjectUI {
             const todoDueDate = document.createElement('p');
             todoDueDate.textContent = todo.dueDate;
             const buttonsDiv = document.createElement('div');
+            buttonsDiv.classList.add('buttonDiv');
             const toggleCompleteBtn = document.createElement('button');
             toggleCompleteBtn.textContent = todo.completed ? "Mark Incomplete" : "Mark Complete";
             const editBtn = document.createElement('button');
@@ -50,9 +51,9 @@ class ProjectUI {
             const deleteBtn = document.createElement('button');
             deleteBtn.textContent = "Delete";
 
-            buttonsDiv.append(toggleCompleteBtn, editBtn, deleteBtn)
+            buttonsDiv.append(toggleCompleteBtn, editBtn, deleteBtn);
 
-            todoCard.append(todoTitle, todoDueDate, buttonsDiv)
+            todoCard.append(todoTitle, todoDueDate, buttonsDiv);
 
             todosContainer.appendChild(todoCard);
 
@@ -100,7 +101,7 @@ class ProjectUI {
         const addTodoBtn = document.querySelector('#addTodo');
         const addTodoModal = document.querySelector('#addTodoModal');
         const addTodoForm = document.querySelector('#addTodoForm');
-        const saveTodoBtn = document.querySelector('#saveTodo')
+        const saveTodoBtn = document.querySelector('#saveTodo');
 
         addTodoBtn.addEventListener('click', () => {            
             this.editingTodoId = null;
@@ -131,7 +132,7 @@ class ProjectUI {
                 const activeProject = this.projectManager.getActiveProject();
                 const todo = activeProject.todos.find(t => t.id === this.editingTodoId);
                 if (todo) {
-                    Object.assign(todo, todoData)
+                    Object.assign(todo, todoData);
                 }
             }
 
