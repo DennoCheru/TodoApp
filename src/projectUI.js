@@ -81,7 +81,7 @@ class ProjectUI {
         });
     }
 
-    addEventListeners() {
+    eventListeners() {
         const addProjectBtn = document.querySelector('#addProject');
         const addProjectModal = document.querySelector('#addProjectModal');
         const addProjectForm = document.querySelector('#addProjectForm');
