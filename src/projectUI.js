@@ -43,7 +43,7 @@ class ProjectUI {
         todos.forEach((todo) => {
             const todoCard = document.createElement('div');
             todoCard.classList.add('card');
-            todoCard.classList.add('priority-${todo.priority}');
+            todoCard.classList.add(`priority-${todo.priority}`);
             const todoTitle = document.createElement('h2');
             todoTitle.textContent = todo.title;
             const todoDueDate = document.createElement('p');
