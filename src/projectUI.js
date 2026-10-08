@@ -1,9 +1,8 @@
-import ProjectManager from "./projectManager";
 import Todo from "./todo";
 
 class ProjectUI {
-    constructor() {
-        this.projectManager = new ProjectManager();
+    constructor(projectManager) {
+        this.projectManager = projectManager;
         this.editingTodoId = null;
     }
 
@@ -39,6 +38,7 @@ class ProjectUI {
         todos.forEach((todo) => {
             const todoCard = document.createElement('div');
             todoCard.classList.add('card');
+            todoCard.classList.add('priority-${todo.priority}')
             const todoTitle = document.createElement('h2');
             todoTitle.textContent = todo.title;
             const todoDueDate = document.createElement('p');
