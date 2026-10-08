@@ -71,6 +71,7 @@ class ProjectUI {
             editBtn.addEventListener('click', () => {
                 this.editingTodoId = todo.id;
                 const editTodoModal = document.querySelector('#addTodoModal');
+                document.querySelector('#todoModalTitle').textContent = "Edit Todo";
                 document.querySelector('#todoTitle').value = todo.title;
                 document.querySelector('#todoDescription').value = todo.description;
                 document.querySelector('#todoDueDate').value = todo.dueDate;
@@ -113,7 +114,8 @@ class ProjectUI {
         const addTodoForm = document.querySelector('#addTodoForm');
         const saveTodoBtn = document.querySelector('#saveTodo');
 
-        addTodoBtn.addEventListener('click', () => {            
+        addTodoBtn.addEventListener('click', () => {   
+            document.querySelector('#todoModalTitle').textContent = "Add Todo";         
             this.editingTodoId = null;
             addTodoModal.showModal();
         });
