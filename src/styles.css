@@ -87,8 +87,50 @@ body h1 {
 }
 
 #projects li {
-  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
   cursor: pointer;
+}
+
+.projectActions {
+  display: flex;
+  gap: 0.25rem;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+#projects li:hover .projectActions,
+#projects li:focus-within .projectActions {
+  opacity: 1;
+}
+
+.projectActions button {
+  background: transparent;
+  color: dimgray;
+  padding: 0.125rem;
+  display: flex;
+}
+
+.projectActions svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.projectActions button:hover,
+.projectActions button:focus-visible {
+  color: blueviolet;
+}
+
+.projectActions button:last-child:hover {
+  color: crimson;
+}
+
+@media (hover: none) {
+  .projectActions {
+    opacity: 1;
+  }
 }
 
 .active {

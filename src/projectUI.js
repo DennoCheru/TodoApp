@@ -1,9 +1,13 @@
 import Todo from "./todo";
 
+import editIcon from "./icons/edit.svg";
+import deleteIcon from "./icons/delete.svg";
+
 class ProjectUI {
     constructor(projectManager) {
         this.projectManager = projectManager;
         this.editingTodoId = null;
+        this.editingProjectId = null;
     }
 
     renderProjects() {
@@ -12,20 +16,59 @@ class ProjectUI {
 
         const projects = this.projectManager.getProjects();
         projects.forEach((project) => {
-            const projectName = document.createElement('li');
+            const projectItem = document.createElement('li');
+
+            const projectName = document.createElement('span');
             projectName.textContent = project.name;
+
+            const actions = document.createElement('span');
+            actions.classList.add('projectActions');
+
+            const editBtn = document.createElement('button');
+            editBtn.innerHTML = editIcon;
+            editBtn.title = 'Edit Project'
+            editBtn.setAttribute('aria-label', `Edit ${project.name}`);
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.innerHTML = deleteIcon;
+            deleteBtn.title = 'Delete Project';
+            deleteBtn.setAttribute('aria-label', `Delete ${project.name}`);
+
+            actions.append(editBtn, deleteBtn)
+            projectItem.append(projectName, actions)
 
             if (project.id === this.projectManager.getActiveProject().id) {
                 projectName.classList.add('active');
             }
 
-            projectName.addEventListener('click', () => {
+            projectItem.addEventListener('click', () => {
                 this.projectManager.setActiveProject(project.id);
                 this.renderProjects();
                 this.renderTodos();
             });
 
-            projectsContainer.appendChild(projectName);
+            editBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.editingProjectId = project.id;
+                document.querySelector('#projectModalTitle').textContent = "Edit Project";
+                document.querySelector('#projectName').value = project.name;
+                document.querySelector('#addProjectModal').showModal();
+            });
+
+            deleteBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if(this.projectManager.getProjects().length === 1) {
+                    alert("You can't delete the last project.");
+                    return;
+                }
+                if (confirm(`Delete "${project.name}" and all its Todos?`)) {
+                    this.projectManager.deleteProject(project.id);
+                    this.renderProjects();
+                    this.renderTodos();
+                }
+            });
+
+            projectsContainer.appendChild(projectItem);
         });
     }
 
@@ -93,6 +136,9 @@ class ProjectUI {
         const addProjectForm = document.querySelector('#addProjectForm');
 
         addProjectBtn.addEventListener('click', () => {
+            this.editingProjectId = null;
+            addProjectForm.reset();
+            document.querySelector('#projectModalTitle').textContent = "Add Project"
             addProjectModal.showModal();
         });
 
@@ -101,8 +147,13 @@ class ProjectUI {
 
             const name = document.querySelector('#projectName').value.trim();
             if (!name) return;
-            this.projectManager.addProject(name);
-
+            if (this.editingProjectId === null) {
+                this.projectManager.addProject(name);
+            } else {
+                this.projectManager.renameProject(this.editingProjectId, name)
+            }
+            
+            this.editingProjectId = null;
             addProjectForm.reset();
             addProjectModal.close();
             this.renderProjects();
@@ -112,7 +163,6 @@ class ProjectUI {
         const addTodoBtn = document.querySelector('#addTodo');
         const addTodoModal = document.querySelector('#addTodoModal');
         const addTodoForm = document.querySelector('#addTodoForm');
-        const saveTodoBtn = document.querySelector('#saveTodo');
 
         addTodoBtn.addEventListener('click', () => {   
             document.querySelector('#todoModalTitle').textContent = "Add Todo";         

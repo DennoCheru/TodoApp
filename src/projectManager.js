@@ -18,12 +18,26 @@ class ProjectManager {
     }
 
     deleteProject(id) {
-        const index = this.projects.findIndex(project => project.id === id);
+        if (this.projects.length === 1) return false;
 
-        if (index !== -1) {
-            this.projects.splice(index, 1);
-        } else if(this.projects.length === 1){
-            alert("Error! Can not delete the last Project");
+        const index = this.projects.findIndex(project => project.id === id);
+        if (index === -1) return false;
+
+        const wasActive = index === this.currentProjectIndex;
+        this.projects.splice(index, 1);
+
+        if (wasActive) {
+            this.currentProjectIndex = Math.max(0, index -1);
+        } else if (index < this.currentProjectIndex) {
+            this.currentProjectIndex--;
+        }
+        return true;
+    }
+
+    renameProject(id, newName) {
+        const project = this.projects.find(project => project.id === id);
+        if (project) {
+            project.name = newName;
         }
     }
 
