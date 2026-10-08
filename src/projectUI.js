@@ -15,8 +15,13 @@ class ProjectUI {
             const projectName = document.createElement('li');
             projectName.textContent = project.name;
 
+            if (project.id === this.projectManager.getActiveProject().id) {
+                projectName.classList.add('active');
+            }
+
             projectName.addEventListener('click', () => {
                 this.projectManager.setActiveProject(project.id);
+                this.renderProjects();
                 this.renderTodos();
             });
 
