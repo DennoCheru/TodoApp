@@ -108,6 +108,7 @@ class ProjectUI {
 
             toggleCompleteBtn.addEventListener('click', () => {
                 todo.completed = !todo.completed;
+                this.projectManager.save()
                 this.renderTodos();
             });
 
@@ -125,6 +126,7 @@ class ProjectUI {
 
             deleteBtn.addEventListener('click', () => {
                 activeProject.deleteTodo(todo.id);
+                this.projectManager.save()
                 this.renderTodos();
             });
         });
@@ -195,6 +197,7 @@ class ProjectUI {
                 const todo = activeProject.todos.find(t => t.id === this.editingTodoId);
                 if (todo) {
                     Object.assign(todo, todoData);
+                    this.projectManager.save();
                 }
             }
 
