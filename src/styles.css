@@ -122,6 +122,18 @@ body h1 {
   gap: 1rem;
 }
 
+.priority-high {
+  border-left: 8px solid crimson;
+}
+
+.priority-medium {
+  border-left: 8px solid orange;
+}
+
+.priority-low {
+  border-left: 8px solid seagreen;
+}
+
 .buttonDiv {
   display: flex;
   gap: 1rem;
