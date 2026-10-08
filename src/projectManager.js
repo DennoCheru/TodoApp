@@ -19,8 +19,8 @@ class ProjectManager {
         const index = this.projects.findIndex(project => project.id === id);
 
         if (index !== -1) {
-            this.projects.slice(index, 1);
-        } else {
+            this.projects.splice(index, 1);
+        } else if(this.projects.length === 1){
             alert("Error! Can not delete the last Project");
         }
     }
