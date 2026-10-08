@@ -90,15 +90,18 @@ class ProjectUI {
         const addProjectBtn = document.querySelector('#addProject');
         const addProjectModal = document.querySelector('#addProjectModal');
         const addProjectForm = document.querySelector('#addProjectForm');
-        const saveProjectBtn = document.querySelector('#saveProject');
 
         addProjectBtn.addEventListener('click', () => {
             addProjectModal.showModal();
         });
 
-        saveProjectBtn.addEventListener('click', () => {
-            const projectName = document.querySelector('#projectName');
-            this.projectManager.addProject(projectName.value);
+        addProjectForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const name = document.querySelector('#projectName').value.trim();
+            if (!name) return;
+            this.projectManager.addProject(name);
+
             addProjectForm.reset();
             addProjectModal.close();
             this.renderProjects();
@@ -115,7 +118,7 @@ class ProjectUI {
             addTodoModal.showModal();
         });
 
-        saveTodoBtn.addEventListener('click', (e) => {
+        addTodoForm.addEventListener('submit', (e) => {
             e.preventDefault();
 
             const todoData = {
