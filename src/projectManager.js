@@ -1,4 +1,5 @@
-import Project from "./project"
+import Project from "./project";
+import ProjectUI from "./projectUI";
 
 class ProjectManager {
     constructor() {
@@ -13,6 +14,7 @@ class ProjectManager {
     addProject(name) {
         const newProject = new Project(name);
         this.projects.push(newProject);
+        this.setActiveProject(newProject.id);
     }
 
     deleteProject(id) {
