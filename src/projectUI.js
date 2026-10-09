@@ -166,7 +166,7 @@ class ProjectUI {
             btn.classList.toggle('selected', selected);
             btn.setAttribute('aria-pressed', selected)
         });
-        documentary.querySelectorAll('#sortControls button').forEach((btn) => {
+        document.querySelectorAll('#sortControls button').forEach((btn) => {
             const selected = btn.dataset.sort === this.sortBy;
             btn.classList.toggle('selected', selected);
             btn.setAttribute('aria-pressed', selected)
