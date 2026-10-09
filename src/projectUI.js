@@ -80,6 +80,11 @@ class ProjectUI {
         this.updateControls();
         const activeProject = this.projectManager.getActiveProject();
 
+        const overdueCount = activeProject.todos.filter((t) => t.isOverdue()).length;
+        const overdueAlert = document.querySelector('#overdueAlert');
+        overdueAlert.hidden = overdueCount === 0;
+        overdueAlert.textContent = `⚠ ${overdueCount} overdue ${overdueCount === 1 ? 'todo' : 'todos'}`
+
         const title = document.querySelector('#header');
         const todosContainer = document.querySelector('#todos');
 
@@ -90,7 +95,7 @@ class ProjectUI {
         const todos = this.getVisibleTodos(activeProject.todos);
         if (todos.length === 0) {
             const empty = document.createElement('p');
-            empty.textContent = "Not todos to show.";
+            empty.textContent = "No todos to show.";
             todosContainer.appendChild(empty);
         }
         
@@ -102,6 +107,15 @@ class ProjectUI {
             todoTitle.textContent = todo.title;
             const todoDueDate = document.createElement('p');
             todoDueDate.textContent = todo.dueDate;
+            const overdue = todo.isOverdue();
+            if (overdue) {
+                todoCard.classList.add('overdue');
+
+                const badge = document.createElement('span');
+                badge.classList.add('overdueBadge');
+                badge.textContent = "Overdue";
+                todoDueDate.append(' ', badge);
+            }
             const buttonsDiv = document.createElement('div');
             buttonsDiv.classList.add('buttonDiv');
             const toggleCompleteBtn = document.createElement('button');
@@ -140,6 +154,7 @@ class ProjectUI {
                 this.projectManager.save()
                 this.renderTodos();
             });
+            console.log(todo.title, todo.dueDate, Todo.today(), todo.isOverdue());
         });
     }
 
@@ -147,6 +162,7 @@ class ProjectUI {
         const result = todos.filter((todo) => {
             if (this.filter === 'active') return !todo.completed;
             if (this.filter === 'completed') return todo.completed;
+            if (this.filter === 'overdue') return todo.isOverdue();
             return true;
         });
 
@@ -155,7 +171,7 @@ class ProjectUI {
             (PRIORITY_RANK[a.priority] ?? 3) - (PRIORITY_RANK[b.priority] ?? 3));
         } else if (this.sortBy === 'dueDate') {
             result.sort((a,b) => 
-            (a.dueDate || '9999-12-31').localeCompare(b.dueDate || '999-12-31'));
+            (a.dueDate || '9999-12-31').localeCompare(b.dueDate || '9999-12-31'));
         }
         return result;
     }
@@ -260,6 +276,10 @@ class ProjectUI {
             if (!btn) return;
             this.sortBy = btn.dataset.sort;
             this.renderTodos();
+        });
+
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) this.renderTodos();
         });
     }
     
