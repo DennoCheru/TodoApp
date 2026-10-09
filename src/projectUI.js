@@ -3,11 +3,15 @@ import Todo from "./todo";
 import editIcon from "./icons/edit.svg";
 import deleteIcon from "./icons/delete.svg";
 
+const PRIORITY_RANK = { high: 0, medium: 1, low: 2 };
+
 class ProjectUI {
     constructor(projectManager) {
         this.projectManager = projectManager;
         this.editingTodoId = null;
         this.editingProjectId = null;
+        this.filter = 'all';
+        this.sortBy = 'none';
     }
 
     renderProjects() {
@@ -73,6 +77,7 @@ class ProjectUI {
     }
 
     renderTodos() {
+        this.updateControls();
         const activeProject = this.projectManager.getActiveProject();
 
         const title = document.querySelector('#header');
@@ -82,7 +87,13 @@ class ProjectUI {
         todosContainer.textContent = "";
 
         
-        const todos = activeProject.todos;
+        const todos = this.getVisibleTodos(activeProject.todos);
+        if (todos.length === 0) {
+            const empty = document.createElement('p');
+            empty.textContent = "Not todos to show.";
+            todosContainer.appendChild(empty);
+        }
+        
         todos.forEach((todo) => {
             const todoCard = document.createElement('div');
             todoCard.classList.add('card');
@@ -129,6 +140,36 @@ class ProjectUI {
                 this.projectManager.save()
                 this.renderTodos();
             });
+        });
+    }
+
+    getVisibleTodos(todos) {
+        const result = todos.filter((todo) => {
+            if (this.filter === 'active') return !todo.completed;
+            if (this.filter === 'completed') return todo.completed;
+            return true;
+        });
+
+        if(this.sortBy === 'priority') {
+            result.sort((a,b) =>
+            (PRIORITY_RANK[a.priority] ?? 3) - (PRIORITY_RANK[b.priority] ?? 3));
+        } else if (this.sortBy === 'dueDate') {
+            result.sort((a,b) => 
+            (a.dueDate || '9999-12-31').localeCompare(b.dueDate || '999-12-31'));
+        }
+        return result;
+    }
+
+    updateControls() {
+        document.querySelectorAll('#filterControls button').forEach((btn) => {
+            const selected = btn.dataset.filter === this.filter;
+            btn.classList.toggle('selected', selected);
+            btn.setAttribute('aria-pressed', selected)
+        });
+        documentary.querySelectorAll('#sortControls button').forEach((btn) => {
+            const selected = btn.dataset.sort === this.sortBy;
+            btn.classList.toggle('selected', selected);
+            btn.setAttribute('aria-pressed', selected)
         });
     }
 
@@ -204,6 +245,20 @@ class ProjectUI {
             this.editingTodoId = null;
             addTodoForm.reset();
             addTodoModal.close();
+            this.renderTodos();
+        });
+
+        document.querySelector('#filterControls').addEventListener('click', (e) => {
+            const btn = e.target.closest('button');
+            if (!btn) return;
+            this.filter = btn.dataset.filter;
+            this.renderTodos();
+        });
+
+        document.querySelector('#sortControls').addEventListener('click', (e) => {
+            const btn = e.target.closest('button');
+            if (!btn) return;
+            this.sortBy = btn.dataset.sort;
             this.renderTodos();
         });
     }

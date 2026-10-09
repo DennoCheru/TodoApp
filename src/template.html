@@ -15,6 +15,18 @@
         </div>
         <div id="todosContainer" class="container">
             <h1 id="header"></h1>
+            <div id="todoControls">
+                <div class="controlGroup" id="filterControls">
+                    <button data-filter="all">All</button>
+                    <button data-filter="active">Active</button>
+                    <button data-filter="completed">Completed</button>
+                </div>
+                <div class="controlGroup" id="sortControls">
+                    <button data-sort="none">Added</button>
+                    <button data-sort="priority">Priority</button>
+                    <button data-sort="dueDate">Due date</button>
+                </div>
+            </div>
             <div id="todos"></div>
             <button id="addTodo">Add Todo</button>
         </div>

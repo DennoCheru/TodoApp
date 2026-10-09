@@ -244,3 +244,26 @@ button {
   flex-direction: column;
 }
 
+#todoControls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+}
+
+.controlGroup {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.controlGroup button {
+  padding: 0.25rem 0.75rem;
+  border: 1px solid black;
+  background: transparent;
+}
+
+.controlGroup button.selected {
+  background: black;
+  color: antiquewhite;
+}
