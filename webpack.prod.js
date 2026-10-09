@@ -10,12 +10,20 @@ module.exports = merge(common, {
     mode: "production",
     output: {
         filename: "main.[contenthash].js",
-        path: path.resolve(import.meta.dirname, "dist"),
+        path: path.resolve(__dirname, "dist"),
         clean: true,
     },
     plugins:[
         new MiniCssExtractPlugin({
             filename: "[name].[contenthash].css",
+        }),
+        new HtmlWebpackPlugin({
+            template: "./src/template.html",
+            minify: {
+                removeAttributeQuotes: true,
+                collapseWhitespace: true,
+                removeComments: true,
+            },
         }),
     ],
     module: {
@@ -30,14 +38,6 @@ module.exports = merge(common, {
         minimizer: [
             new CssMinimizerPlugin(),
             new TerserPlugin(),
-            new HtmlWebpackPlugin({
-                template: "./src/template.html",
-                minify: {
-                    removeAttributeQuotes: true,
-                    collapseWhitespace: true,
-                    removeComments: true,
-                },
-            }),
         ],
     },
 });
